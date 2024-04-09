@@ -12,7 +12,7 @@ const Tabata = () => {
                         <FontAwesomeIcon icon={faArrowLeftLong} size="xl"/>
                     </button>
                 </Link>
-                <h1 className="text-8xl">TABATA</h1>
+                <h1 className="text-8xl ml-6">TABATA</h1>
             </div>
 
             <form>
