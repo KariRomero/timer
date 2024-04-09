@@ -26,7 +26,7 @@ const Home = () => {
                 {
                     buttons.map((btn)=>(
                         <Link key={btn.btn} to={btn.link}>
-                            <button className="broder-solid border-2 border-white bg-black hover:bg-green hover:border-black hover:text-black w-96 py-5 my-4 tracking-widest font-medium text-3xl">{btn.btn}</button>
+                            <button className="broder-solid border-2 border-white bg-black hover:bg-green hover:border-black hover:text-black w-96 py-5 my-2 tracking-widest font-medium text-3xl">{btn.btn}</button>
                         </Link>
                     ))
                 }
