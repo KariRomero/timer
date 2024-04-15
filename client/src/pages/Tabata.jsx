@@ -35,6 +35,10 @@ const Tabata = () => {
             alert('Por favor, complete todos los campos.');
             return;
         }
+        console.log('Starting Tabata with:');
+        console.log('Rounds:', rounds);
+        console.log('Work Time:', workTime);
+        console.log('Rest Time:', restTime);
         setCountdown(3); 
         setShowTimer(true); 
         setShowTitle(false);
@@ -53,17 +57,27 @@ const Tabata = () => {
         setCurrentRound(1);
         setIsWorking(true);
         setTimeLeft(workTime);
+        console.log('Starting timer with:');
+        console.log('Current Round:', currentRound);
+        console.log('Is Working:', isWorking);
+        console.log('Time Left:', timeLeft);
         setTimer(setInterval(() => {
             setTimeLeft(prevTime => prevTime - 1);
         }, 1000));
     };
 
     const handleNextPeriod = () => {
+        console.log('Transitioning to next period with:');
+        console.log('Current Round:', currentRound);
+        console.log('Is Working:', isWorking);
+    
         if (isWorking) {
             if (currentRound < rounds) {
                 setCurrentRound(prevRound => prevRound + 1);
                 setIsWorking(false);
-                setTimeLeft(restTime);
+                setTimeLeft(restTime); // Aquí deberías establecer el tiempo de descanso
+                console.log('Transitioning to rest period with:');
+                console.log('Time Left:', restTime);
             } else {
                 clearInterval(timer);
                 alert('¡Tabata completado!');
@@ -71,8 +85,11 @@ const Tabata = () => {
         } else {
             setIsWorking(true);
             setTimeLeft(workTime);
+            console.log('Transitioning to work period with:');
+            console.log('Time Left:', workTime);
         }
     };
+    
 
     const handleBack=()=>{
         setShowTimer(false);
@@ -82,24 +99,19 @@ const Tabata = () => {
     return(
         <>
         <div className="text-white font-sans mt-14">
+            {title && (
+                <div className='flex justify-center items-center'>
+                    <Link to='/'>
+                        <button className='w-12 h-12 px-2 py-2 rounded-full border-solid border-2 border-white  text-white hover:text-black hover:bg-green hover:border-black'>
+                            <FontAwesomeIcon icon={faArrowLeftLong} size="xl"/>
+                        </button>
+                    </Link>
+                    <h1 className="text-8xl ml-6">TABATA</h1>
+                </div>
+            )}
 
-            {
-                title && (
-                    <div className='flex justify-center items-center'>
-                        <Link to='/'>
-                            <button className='w-12 h-12 px-2 py-2 rounded-full border-solid border-2 border-white  text-white hover:text-black hover:bg-green hover:border-black'>
-                                <FontAwesomeIcon icon={faArrowLeftLong} size="xl"/>
-                            </button>
-                        </Link>
-                        <h1 className="text-8xl ml-6">TABATA</h1>
-                    </div>
-                )
-            }
-
-            {/* FORMULARIO */}
             <form onSubmit={handleStart} style={{ display: showTimer ? 'none' : 'block' }}>
                 <div className='grid justify-center'>
-                    {/* ROUNDS */}
                     <div className='flex flex-col'>
                         <label className='text-3xl tracking-widest font-medium text-center'>ROUNDS</label>
                         <input 
@@ -110,7 +122,6 @@ const Tabata = () => {
                         />
                     </div>
 
-                    {/* TIME OF WORK */}
                     <div className='flex flex-col'>
                         <label className='text-3xl tracking-widest font-medium text-center'>WORK</label>
                         <input 
@@ -121,7 +132,6 @@ const Tabata = () => {
                         />
                     </div>
 
-                    {/* TIME OF REST */}
                     <div className='flex flex-col'>
                         <label className='text-3xl tracking-widest font-medium text-center'>REST</label>
                         <input 
@@ -131,12 +141,10 @@ const Tabata = () => {
                         onChange={(e) => setRestTime(parseInt(e.target.value))}
                         />
                     </div>
-                    {/* BUTTON START */}
                     <button type="submit" className='w-1/2 justify-self-center border-solid border-2 border-white text-2xl tracking-widest font-medium p-2 mt-4 hover:bg-green hover:text-black hover:border-black'>START</button>
                 </div>
             </form>
 
-            {/* TIMER  */}
             {showTimer && (
               <div className="text-center mt-8">
                   {countdown > 0 ? (
