@@ -16,11 +16,19 @@ const Tabata = () => {
     const [title, setShowTitle] = useState(true);
 
     useEffect(() => {
-        if (timer && timeLeft === 0) {
+        if (timer !== null && timeLeft === 0) {
             clearInterval(timer);
             handleNextPeriod();
         }
     }, [timer, timeLeft]);
+
+
+    useEffect(() => {
+        return () => {
+            clearInterval(timer);
+        };
+    }, [timer]);
+
 
     const formatTime = (time) => {
         const hours = Math.floor(time / 3600);
@@ -54,17 +62,19 @@ const Tabata = () => {
     };
 
     const startTimer = () => {
-        setCurrentRound(1);
-        setIsWorking(true);
-        setTimeLeft(workTime);
-        console.log('Starting timer with:');
-        console.log('Current Round:', currentRound);
-        console.log('Is Working:', isWorking);
-        console.log('Time Left:', timeLeft);
-        setTimer(setInterval(() => {
-            setTimeLeft(prevTime => prevTime - 1);
-        }, 1000));
-    };
+    setCurrentRound(1);
+    setIsWorking(true);
+    setTimeLeft(workTime);
+    setTimer(setInterval(() => {
+        setTimeLeft(prevTime => {
+            if (prevTime === 0) {
+                clearInterval(timer);
+                return 0;
+            }
+            return prevTime - 1;
+        });
+    }, 1000));
+};
 
     const handleNextPeriod = () => {
         console.log('Transitioning to next period with:');
